@@ -1,0 +1,117 @@
+﻿<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+	@*@Styles.Render("~/Content/css")
+		@Scripts.Render("~/bundles/modernizr")*@
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Customer</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+	<!--     Fonts and icons     -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+	<!-- CSS Files -->
+	<link href="~/fonts/css/bootstrap.min.css" rel="stylesheet" />
+	@*<link href="~/fonts/css/now-ui-dashboard.css?v=1.0.1" rel="stylesheet" />*@
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<link href="~/fonts/demo/demo.css" rel="stylesheet" />
+	<script src="~/Scripts/jquery.min.js"></script>
+	<script src="~/Scripts/popper.min.js"></script>
+	<script src="~/Scripts/bootstrap.min.js"></script>
+	<link href="~/Scripts/now-ui-dashboard.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-basic-latest.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.20.0/pivot.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.22.0/plotly_renderers.min.js"></script>
+	@*<script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.20.0/tips_data.min.js"></script>*@
+</head>
+<body>
+	<div class="wrapper ">
+		<div class="sidebar" data-color="blue">
+			<!--
+				Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+			-->
+			<div class="logo">
+				<!--a href="http://www.creative-tim.com" class="simple-text logo-mini">
+					CT
+				</a-->
+				<a href="#" class="simple-text logo-normal">
+					Analysis View
+				</a>
+			</div>
+			<div class="sidebar-wrapper">
+				<ul class="nav">
+					<li class="" id="dashboard">
+						<a href="../Home/Index">
+							<i class="now-ui-icons design_app"></i>
+							<p>Dashboard</p>
+						</a>
+					</li>
+
+					<li class="" id="product">
+						<a href="../Home/Product">
+							<i class="now-ui-icons tech_watch-time"></i>
+							<p>Product</p>
+						</a>
+					</li>
+
+					<li class="" id="top_brand">
+						<a href="../Home/Top_Brand">
+							<i class="now-ui-icons business_chart-pie-36"></i>
+							<p>Brand</p>
+						</a>
+					</li>
+
+					<li class="" id="customer">
+						<a href="../Home/Customer">
+
+							<i class="now-ui-icons users_single-02"></i>
+							<p>Customer</p>
+						</a>
+					</li>
+
+					<li class="" id="sales_detail">
+						<a href="../Home/Sales">
+							<i class="now-ui-icons design_bullet-list-67"></i>
+							<p>Sales Detail</p>
+						</a>
+					</li>
+
+					<li class="" id="report_cus">
+						<a href="../Home/Cus_Report">
+							<i class="now-ui-icons education_paper"></i>
+							<p>Customer Report</p>
+						</a>
+					</li>
+
+					<li class="" id="report_watches">
+						<a href="../Home/Watches_Report">
+							<i class="now-ui-icons education_atom"></i>
+							<p>Watches Report</p>
+						</a>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			@RenderBody()
+			
+
+			@Scripts.Render("~/bundles/jquery")
+			@Scripts.Render("~/bundles/bootstrap")
+			@RenderSection("scripts", required: false)
+		</div>
+	</div>
+
+
+</body>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/popper.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="~/Scripts/plugins/bootstrap-notify.js"></script>
+</html>

@@ -1,0 +1,70 @@
+﻿@*<script type="text/javascript" src="https://cdnjs.com/libraries/Chart.js"></script>*@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+
+@{
+	ViewBag.Title = "Dash Board";
+}
+@using AnalysisView.Models;
+@*@model List<khach_hang_sales>*@
+<h2>Dash Board</h2>
+<canvas id="contentContainer" class=""></canvas>
+@*<table id="content" style="display:none">
+		<thead>W
+			<tr>
+				<th>makh</th>
+				<th>ten_kh</th>
+				<th>so_luong</th>
+				<th>so_tien</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (khach_hang_sales khs in Model)
+			{
+				<tr>
+					<td>@khs.makh</td>
+					<td>@khs.ten_kh</td>
+					<td>@khs.so_luong</td>
+					<td>@khs.so_tien</td>
+				</tr>
+			}
+		</tbody>
+	</table>*@
+<script>
+	$('.active').removeClass;
+	$('#dashboard').addClass('active');
+
+	var label_data = @Html.Raw(Json.Encode(ViewBag._date));
+	var data_so_tien = @Html.Raw(Json.Encode(ViewBag.so_tien));
+
+	var options = {
+		type: 'line',
+		data: {
+		labels: label_data,
+			datasets: [
+				{
+					label: 'Sales Cost',
+					data: data_so_tien,
+					borderWidth: 1,
+					pointRadius: 4,
+					pointBackgroundColor: 'rgb(100,91,0)',
+					backgroundColor: 'rgb(153, 102, 255)'
+				}
+			]
+		}
+	};
+	var chart_container = document.getElementById('contentContainer');
+	new Chart(chart_container, options);
+//var data = $('#content');
+//$("#contentContainer").pivotUI(
+//	data, {
+//		rows: ["makh", "ten_kh","so_luong", "so_tien" ],
+//		//cols: ["so_luong", "so_tien"],
+//		vals: ["so_tien"],
+//		aggregatorName: "Sum",
+//		rendererName: "Table",
+//		renderers: $.extend(
+//			$.pivotUtilities.renderers,
+//			$.pivotUtilities.plotly_renderers
+//		)
+//	});
+</script>

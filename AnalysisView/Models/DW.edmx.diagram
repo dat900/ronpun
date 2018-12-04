@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e6317a1e7dfb4deebb6b87f8ce414a0e" Name="Diagram1">
+        <EntityTypeShape EntityType="DW_WatchesModel.day" Width="1.5" PointX="3.125" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.dong_ho" Width="1.5" PointX="3.625" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.dong_ho_sales" Width="1.5" PointX="8.125" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.khach_hang" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.khach_hang_sales" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.loai" Width="1.5" PointX="0.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.sysdiagram" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.time_by_day" Width="1.5" PointX="7.375" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DW_WatchesModel.sales_fact" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="DW_WatchesModel.FK_time_by_day_days" ManuallyRouted="false" />
+        <AssociationConnector Association="DW_WatchesModel.FK__dong_ho__id_loai__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="DW_WatchesModel.FK__sales_fact__masp__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="DW_WatchesModel.FK_dong_ho_sales_dong_ho" ManuallyRouted="false" />
+        <AssociationConnector Association="DW_WatchesModel.FK__khach_hang__makh__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="DW_WatchesModel.FK__sales_fact__makh__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="DW_WatchesModel.FK_sales_fact_time_by_day" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

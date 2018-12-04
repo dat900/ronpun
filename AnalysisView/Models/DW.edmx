@@ -1,0 +1,596 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DW_WatchesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="days">
+          <Key>
+            <PropertyRef Name="day" />
+          </Key>
+          <Property Name="day" Type="int" Nullable="false" />
+          <Property Name="week_day" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="dong_ho">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="masp" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="id_loai" Type="int" />
+          <Property Name="thuong_hieu" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="don_gia" Type="money" Nullable="false" />
+          <Property Name="bao_hanh" Type="int" />
+          <Property Name="loai" Type="varchar" MaxLength="3" />
+          <Property Name="ten_sp" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dong_ho_sales">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="ten_dh" Type="varchar" MaxLength="50" />
+          <Property Name="so_luong" Type="int" Nullable="false" />
+          <Property Name="so_tien" Type="money" Nullable="false" />
+          <Property Name="masp" Type="varchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="khach_hang">
+          <Key>
+            <PropertyRef Name="makh" />
+          </Key>
+          <Property Name="makh" Type="int" Nullable="false" />
+          <Property Name="ten_kh" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="dia_chi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sdt" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="khach_hang_sales">
+          <Key>
+            <PropertyRef Name="makh" />
+          </Key>
+          <Property Name="makh" Type="int" Nullable="false" />
+          <Property Name="ten_kh" Type="varchar" MaxLength="30" />
+          <Property Name="so_luong" Type="int" Nullable="false" />
+          <Property Name="so_tien" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="loai">
+          <Key>
+            <PropertyRef Name="id_loai" />
+          </Key>
+          <Property Name="id_loai" Type="int" Nullable="false" />
+          <Property Name="ten_loai" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DW_Watches.dbo.sales_fact' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="sales_fact">
+          <Key>
+            <PropertyRef Name="so_luong" />
+            <PropertyRef Name="so_tien" />
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="time_id" Type="int" />
+          <Property Name="so_luong" Type="int" Nullable="false" />
+          <Property Name="so_tien" Type="money" Nullable="false" />
+          <Property Name="makh" Type="int" />
+          <Property Name="masp" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="ngaygd" Type="date" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="time_by_day">
+          <Key>
+            <PropertyRef Name="time_id" />
+          </Key>
+          <Property Name="time_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="the_date" Type="date" />
+          <Property Name="the_day" Type="varchar" MaxLength="15" />
+          <Property Name="the_month" Type="int" />
+          <Property Name="the_year" Type="int" />
+          <Property Name="day_of_month" Type="int" />
+          <Property Name="week_of_year" Type="int" />
+          <Property Name="month_of_year" Type="int" />
+          <Property Name="quater" Type="int" />
+          <Property Name="day_of_week" Type="int" />
+        </EntityType>
+        <Association Name="FK__dong_ho__id_loai__164452B1">
+          <End Role="loai" Type="Self.loai" Multiplicity="0..1" />
+          <End Role="dong_ho" Type="Self.dong_ho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="loai">
+              <PropertyRef Name="id_loai" />
+            </Principal>
+            <Dependent Role="dong_ho">
+              <PropertyRef Name="id_loai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__khach_hang__makh__2A4B4B5E">
+          <End Role="khach_hang" Type="Self.khach_hang" Multiplicity="1" />
+          <End Role="khach_hang_sales" Type="Self.khach_hang_sales" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="khach_hang">
+              <PropertyRef Name="makh" />
+            </Principal>
+            <Dependent Role="khach_hang_sales">
+              <PropertyRef Name="makh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sales_fact__makh__47DBAE45">
+          <End Role="khach_hang" Type="Self.khach_hang" Multiplicity="0..1" />
+          <End Role="sales_fact" Type="Self.sales_fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="khach_hang">
+              <PropertyRef Name="makh" />
+            </Principal>
+            <Dependent Role="sales_fact">
+              <PropertyRef Name="makh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sales_fact__masp__49C3F6B7">
+          <End Role="dong_ho" Type="Self.dong_ho" Multiplicity="1" />
+          <End Role="sales_fact" Type="Self.sales_fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dong_ho">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="sales_fact">
+              <PropertyRef Name="masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dong_ho_sales_dong_ho">
+          <End Role="dong_ho" Type="Self.dong_ho" Multiplicity="1" />
+          <End Role="dong_ho_sales" Type="Self.dong_ho_sales" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="dong_ho">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="dong_ho_sales">
+              <PropertyRef Name="masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_fact_time_by_day">
+          <End Role="time_by_day" Type="Self.time_by_day" Multiplicity="0..1" />
+          <End Role="sales_fact" Type="Self.sales_fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_by_day">
+              <PropertyRef Name="time_id" />
+            </Principal>
+            <Dependent Role="sales_fact">
+              <PropertyRef Name="time_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_time_by_day_days">
+          <End Role="days" Type="Self.days" Multiplicity="0..1" />
+          <End Role="time_by_day" Type="Self.time_by_day" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="days">
+              <PropertyRef Name="day" />
+            </Principal>
+            <Dependent Role="time_by_day">
+              <PropertyRef Name="day_of_week" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DW_WatchesModelStoreContainer">
+          <EntitySet Name="days" EntityType="Self.days" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dong_ho" EntityType="Self.dong_ho" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dong_ho_sales" EntityType="Self.dong_ho_sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="khach_hang" EntityType="Self.khach_hang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="khach_hang_sales" EntityType="Self.khach_hang_sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="loai" EntityType="Self.loai" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="time_by_day" EntityType="Self.time_by_day" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales_fact" EntityType="Self.sales_fact" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[sales_fact].[time_id] AS [time_id], 
+[sales_fact].[so_luong] AS [so_luong], 
+[sales_fact].[so_tien] AS [so_tien], 
+[sales_fact].[makh] AS [makh], 
+[sales_fact].[masp] AS [masp], 
+[sales_fact].[ngaygd] AS [ngaygd]
+FROM [dbo].[sales_fact] AS [sales_fact]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__dong_ho__id_loai__164452B1" Association="Self.FK__dong_ho__id_loai__164452B1">
+            <End Role="loai" EntitySet="loai" />
+            <End Role="dong_ho" EntitySet="dong_ho" />
+          </AssociationSet>
+          <AssociationSet Name="FK__khach_hang__makh__2A4B4B5E" Association="Self.FK__khach_hang__makh__2A4B4B5E">
+            <End Role="khach_hang" EntitySet="khach_hang" />
+            <End Role="khach_hang_sales" EntitySet="khach_hang_sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales_fact__makh__47DBAE45" Association="Self.FK__sales_fact__makh__47DBAE45">
+            <End Role="khach_hang" EntitySet="khach_hang" />
+            <End Role="sales_fact" EntitySet="sales_fact" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales_fact__masp__49C3F6B7" Association="Self.FK__sales_fact__masp__49C3F6B7">
+            <End Role="dong_ho" EntitySet="dong_ho" />
+            <End Role="sales_fact" EntitySet="sales_fact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dong_ho_sales_dong_ho" Association="Self.FK_dong_ho_sales_dong_ho">
+            <End Role="dong_ho" EntitySet="dong_ho" />
+            <End Role="dong_ho_sales" EntitySet="dong_ho_sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_fact_time_by_day" Association="Self.FK_sales_fact_time_by_day">
+            <End Role="time_by_day" EntitySet="time_by_day" />
+            <End Role="sales_fact" EntitySet="sales_fact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_time_by_day_days" Association="Self.FK_time_by_day_days">
+            <End Role="days" EntitySet="days" />
+            <End Role="time_by_day" EntitySet="time_by_day" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DW_WatchesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="day">
+          <Key>
+            <PropertyRef Name="day1" />
+          </Key>
+          <Property Name="day1" Type="Int32" Nullable="false" />
+          <Property Name="week_day" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="time_by_day" Relationship="Self.FK_time_by_day_days" FromRole="days" ToRole="time_by_day" />
+        </EntityType>
+        <EntityType Name="dong_ho">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="masp" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_loai" Type="Int32" />
+          <Property Name="thuong_hieu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="don_gia" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="bao_hanh" Type="Int32" />
+          <Property Name="loai" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ten_sp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="loai1" Relationship="Self.FK__dong_ho__id_loai__164452B1" FromRole="dong_ho" ToRole="loai" />
+          <NavigationProperty Name="sales_fact" Relationship="Self.FK__sales_fact__masp__49C3F6B7" FromRole="dong_ho" ToRole="sales_fact" />
+          <NavigationProperty Name="dong_ho_sales" Relationship="Self.FK_dong_ho_sales_dong_ho" FromRole="dong_ho" ToRole="dong_ho_sales" />
+        </EntityType>
+        <EntityType Name="dong_ho_sales">
+          <Key>
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="ten_dh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="so_luong" Type="Int32" Nullable="false" />
+          <Property Name="so_tien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="masp" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="dong_ho" Relationship="Self.FK_dong_ho_sales_dong_ho" FromRole="dong_ho_sales" ToRole="dong_ho" />
+        </EntityType>
+        <EntityType Name="khach_hang">
+          <Key>
+            <PropertyRef Name="makh" />
+          </Key>
+          <Property Name="makh" Type="Int32" Nullable="false" />
+          <Property Name="ten_kh" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dia_chi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sdt" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="khach_hang_sales" Relationship="Self.FK__khach_hang__makh__2A4B4B5E" FromRole="khach_hang" ToRole="khach_hang_sales" />
+          <NavigationProperty Name="sales_fact" Relationship="Self.FK__sales_fact__makh__47DBAE45" FromRole="khach_hang" ToRole="sales_fact" />
+        </EntityType>
+        <EntityType Name="khach_hang_sales">
+          <Key>
+            <PropertyRef Name="makh" />
+          </Key>
+          <Property Name="makh" Type="Int32" Nullable="false" />
+          <Property Name="ten_kh" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="so_luong" Type="Int32" Nullable="false" />
+          <Property Name="so_tien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="khach_hang" Relationship="Self.FK__khach_hang__makh__2A4B4B5E" FromRole="khach_hang_sales" ToRole="khach_hang" />
+        </EntityType>
+        <EntityType Name="loai">
+          <Key>
+            <PropertyRef Name="id_loai" />
+          </Key>
+          <Property Name="id_loai" Type="Int32" Nullable="false" />
+          <Property Name="ten_loai" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="dong_ho" Relationship="Self.FK__dong_ho__id_loai__164452B1" FromRole="loai" ToRole="dong_ho" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="time_by_day">
+          <Key>
+            <PropertyRef Name="time_id" />
+          </Key>
+          <Property Name="time_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="the_date" Type="DateTime" Precision="0" />
+          <Property Name="the_day" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="the_month" Type="Int32" />
+          <Property Name="the_year" Type="Int32" />
+          <Property Name="day_of_month" Type="Int32" />
+          <Property Name="week_of_year" Type="Int32" />
+          <Property Name="month_of_year" Type="Int32" />
+          <Property Name="quater" Type="Int32" />
+          <Property Name="day_of_week" Type="Int32" />
+          <NavigationProperty Name="day" Relationship="Self.FK_time_by_day_days" FromRole="time_by_day" ToRole="days" />
+          <NavigationProperty Name="sales_fact" Relationship="Self.FK_sales_fact_time_by_day" FromRole="time_by_day" ToRole="sales_fact" />
+        </EntityType>
+        <EntityType Name="sales_fact">
+          <Key>
+            <PropertyRef Name="so_luong" />
+            <PropertyRef Name="so_tien" />
+            <PropertyRef Name="masp" />
+          </Key>
+          <Property Name="time_id" Type="Int32" />
+          <Property Name="so_luong" Type="Int32" Nullable="false" />
+          <Property Name="so_tien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="makh" Type="Int32" />
+          <Property Name="masp" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ngaygd" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="dong_ho" Relationship="Self.FK__sales_fact__masp__49C3F6B7" FromRole="sales_fact" ToRole="dong_ho" />
+          <NavigationProperty Name="khach_hang" Relationship="Self.FK__sales_fact__makh__47DBAE45" FromRole="sales_fact" ToRole="khach_hang" />
+          <NavigationProperty Name="time_by_day" Relationship="Self.FK_sales_fact_time_by_day" FromRole="sales_fact" ToRole="time_by_day" />
+        </EntityType>
+        <Association Name="FK_time_by_day_days">
+          <End Role="days" Type="Self.day" Multiplicity="0..1" />
+          <End Role="time_by_day" Type="Self.time_by_day" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="days">
+              <PropertyRef Name="day1" />
+            </Principal>
+            <Dependent Role="time_by_day">
+              <PropertyRef Name="day_of_week" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__dong_ho__id_loai__164452B1">
+          <End Role="loai" Type="Self.loai" Multiplicity="0..1" />
+          <End Role="dong_ho" Type="Self.dong_ho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="loai">
+              <PropertyRef Name="id_loai" />
+            </Principal>
+            <Dependent Role="dong_ho">
+              <PropertyRef Name="id_loai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sales_fact__masp__49C3F6B7">
+          <End Role="dong_ho" Type="Self.dong_ho" Multiplicity="1" />
+          <End Role="sales_fact" Type="Self.sales_fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dong_ho">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="sales_fact">
+              <PropertyRef Name="masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dong_ho_sales_dong_ho">
+          <End Role="dong_ho" Type="Self.dong_ho" Multiplicity="1" />
+          <End Role="dong_ho_sales" Type="Self.dong_ho_sales" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="dong_ho">
+              <PropertyRef Name="masp" />
+            </Principal>
+            <Dependent Role="dong_ho_sales">
+              <PropertyRef Name="masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__khach_hang__makh__2A4B4B5E">
+          <End Role="khach_hang" Type="Self.khach_hang" Multiplicity="1" />
+          <End Role="khach_hang_sales" Type="Self.khach_hang_sales" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="khach_hang">
+              <PropertyRef Name="makh" />
+            </Principal>
+            <Dependent Role="khach_hang_sales">
+              <PropertyRef Name="makh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sales_fact__makh__47DBAE45">
+          <End Role="khach_hang" Type="Self.khach_hang" Multiplicity="0..1" />
+          <End Role="sales_fact" Type="Self.sales_fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="khach_hang">
+              <PropertyRef Name="makh" />
+            </Principal>
+            <Dependent Role="sales_fact">
+              <PropertyRef Name="makh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_fact_time_by_day">
+          <End Role="time_by_day" Type="Self.time_by_day" Multiplicity="0..1" />
+          <End Role="sales_fact" Type="Self.sales_fact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_by_day">
+              <PropertyRef Name="time_id" />
+            </Principal>
+            <Dependent Role="sales_fact">
+              <PropertyRef Name="time_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DW_WatchesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="days" EntityType="Self.day" />
+          <EntitySet Name="dong_ho" EntityType="Self.dong_ho" />
+          <EntitySet Name="dong_ho_sales" EntityType="Self.dong_ho_sales" />
+          <EntitySet Name="khach_hang" EntityType="Self.khach_hang" />
+          <EntitySet Name="khach_hang_sales" EntityType="Self.khach_hang_sales" />
+          <EntitySet Name="loais" EntityType="Self.loai" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="time_by_day" EntityType="Self.time_by_day" />
+          <EntitySet Name="sales_fact" EntityType="Self.sales_fact" />
+          <AssociationSet Name="FK_time_by_day_days" Association="Self.FK_time_by_day_days">
+            <End Role="days" EntitySet="days" />
+            <End Role="time_by_day" EntitySet="time_by_day" />
+          </AssociationSet>
+          <AssociationSet Name="FK__dong_ho__id_loai__164452B1" Association="Self.FK__dong_ho__id_loai__164452B1">
+            <End Role="loai" EntitySet="loais" />
+            <End Role="dong_ho" EntitySet="dong_ho" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales_fact__masp__49C3F6B7" Association="Self.FK__sales_fact__masp__49C3F6B7">
+            <End Role="dong_ho" EntitySet="dong_ho" />
+            <End Role="sales_fact" EntitySet="sales_fact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dong_ho_sales_dong_ho" Association="Self.FK_dong_ho_sales_dong_ho">
+            <End Role="dong_ho" EntitySet="dong_ho" />
+            <End Role="dong_ho_sales" EntitySet="dong_ho_sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__khach_hang__makh__2A4B4B5E" Association="Self.FK__khach_hang__makh__2A4B4B5E">
+            <End Role="khach_hang" EntitySet="khach_hang" />
+            <End Role="khach_hang_sales" EntitySet="khach_hang_sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales_fact__makh__47DBAE45" Association="Self.FK__sales_fact__makh__47DBAE45">
+            <End Role="khach_hang" EntitySet="khach_hang" />
+            <End Role="sales_fact" EntitySet="sales_fact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_fact_time_by_day" Association="Self.FK_sales_fact_time_by_day">
+            <End Role="time_by_day" EntitySet="time_by_day" />
+            <End Role="sales_fact" EntitySet="sales_fact" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DW_WatchesModelStoreContainer" CdmEntityContainer="DW_WatchesEntities">
+          <EntitySetMapping Name="days">
+            <EntityTypeMapping TypeName="DW_WatchesModel.day">
+              <MappingFragment StoreEntitySet="days">
+                <ScalarProperty Name="day1" ColumnName="day" />
+                <ScalarProperty Name="week_day" ColumnName="week_day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dong_ho">
+            <EntityTypeMapping TypeName="DW_WatchesModel.dong_ho">
+              <MappingFragment StoreEntitySet="dong_ho">
+                <ScalarProperty Name="masp" ColumnName="masp" />
+                <ScalarProperty Name="id_loai" ColumnName="id_loai" />
+                <ScalarProperty Name="thuong_hieu" ColumnName="thuong_hieu" />
+                <ScalarProperty Name="don_gia" ColumnName="don_gia" />
+                <ScalarProperty Name="bao_hanh" ColumnName="bao_hanh" />
+                <ScalarProperty Name="loai" ColumnName="loai" />
+                <ScalarProperty Name="ten_sp" ColumnName="ten_sp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dong_ho_sales">
+            <EntityTypeMapping TypeName="DW_WatchesModel.dong_ho_sales">
+              <MappingFragment StoreEntitySet="dong_ho_sales">
+                <ScalarProperty Name="ten_dh" ColumnName="ten_dh" />
+                <ScalarProperty Name="so_luong" ColumnName="so_luong" />
+                <ScalarProperty Name="so_tien" ColumnName="so_tien" />
+                <ScalarProperty Name="masp" ColumnName="masp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="khach_hang">
+            <EntityTypeMapping TypeName="DW_WatchesModel.khach_hang">
+              <MappingFragment StoreEntitySet="khach_hang">
+                <ScalarProperty Name="makh" ColumnName="makh" />
+                <ScalarProperty Name="ten_kh" ColumnName="ten_kh" />
+                <ScalarProperty Name="dia_chi" ColumnName="dia_chi" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="khach_hang_sales">
+            <EntityTypeMapping TypeName="DW_WatchesModel.khach_hang_sales">
+              <MappingFragment StoreEntitySet="khach_hang_sales">
+                <ScalarProperty Name="makh" ColumnName="makh" />
+                <ScalarProperty Name="ten_kh" ColumnName="ten_kh" />
+                <ScalarProperty Name="so_luong" ColumnName="so_luong" />
+                <ScalarProperty Name="so_tien" ColumnName="so_tien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="loais">
+            <EntityTypeMapping TypeName="DW_WatchesModel.loai">
+              <MappingFragment StoreEntitySet="loai">
+                <ScalarProperty Name="id_loai" ColumnName="id_loai" />
+                <ScalarProperty Name="ten_loai" ColumnName="ten_loai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DW_WatchesModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="time_by_day">
+            <EntityTypeMapping TypeName="DW_WatchesModel.time_by_day">
+              <MappingFragment StoreEntitySet="time_by_day">
+                <ScalarProperty Name="time_id" ColumnName="time_id" />
+                <ScalarProperty Name="the_date" ColumnName="the_date" />
+                <ScalarProperty Name="the_day" ColumnName="the_day" />
+                <ScalarProperty Name="the_month" ColumnName="the_month" />
+                <ScalarProperty Name="the_year" ColumnName="the_year" />
+                <ScalarProperty Name="day_of_month" ColumnName="day_of_month" />
+                <ScalarProperty Name="week_of_year" ColumnName="week_of_year" />
+                <ScalarProperty Name="month_of_year" ColumnName="month_of_year" />
+                <ScalarProperty Name="quater" ColumnName="quater" />
+                <ScalarProperty Name="day_of_week" ColumnName="day_of_week" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales_fact">
+            <EntityTypeMapping TypeName="DW_WatchesModel.sales_fact">
+              <MappingFragment StoreEntitySet="sales_fact">
+                <ScalarProperty Name="time_id" ColumnName="time_id" />
+                <ScalarProperty Name="so_luong" ColumnName="so_luong" />
+                <ScalarProperty Name="so_tien" ColumnName="so_tien" />
+                <ScalarProperty Name="makh" ColumnName="makh" />
+                <ScalarProperty Name="masp" ColumnName="masp" />
+                <ScalarProperty Name="ngaygd" ColumnName="ngaygd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

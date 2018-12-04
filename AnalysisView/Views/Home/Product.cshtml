@@ -1,0 +1,81 @@
+﻿<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+
+@{
+	ViewBag.Title = "Product";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using AnalysisView.Models;
+@model List<dong_ho_sales>
+<h2>Products</h2>
+@*<div id="contentContainer"></div>*@
+@*<table id="content" style="display:none">
+	<thead>
+		<tr>
+			<th>Watches No</th>
+			<th>Watches Name</th>
+			<th>Unit Sales</th>
+			<th>Sales Cost</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (dong_ho_sales dhs in Model)
+		{
+			<tr>
+				<td>@dhs.masp</td>
+				<td>@dhs.ten_dh</td>
+				<td>@dhs.so_luong</td>
+				<td>@dhs.so_tien</td>
+			</tr>
+		}
+	</tbody>
+</table>*@
+<canvas id="chartContainer"></canvas>
+<script>
+		$('.active').removeClass;
+		$('#product').addClass('active');
+	var data_label = @Html.Raw(Json.Encode(ViewBag.tendh));
+	var data_so_tien = @Html.Raw(Json.Encode(ViewBag.so_tien));
+	var colors = [
+		'rgb(71, 191, 180)',
+		'rgb(51, 143, 82)',
+		'rgb(252, 180, 92)',
+		'rgb(247, 70, 74)',
+		'rgb(13, 27, 63)',
+		'rgb(150, 181, 180)',
+		'rgb(94, 65, 149)',
+		'rgb(77, 83, 96)',
+		'rgb(180, 142, 173)',
+		'rgb(235, 203, 138)',
+		'rgb(171, 121, 103)',
+		'rgb(134, 175, 18)'
+	];
+	var options_chart = {
+		type: 'bar',
+		data: {
+			labels: data_label,
+			datasets: [
+				{
+					label: 'Sales Cost',
+					data: data_so_tien,
+					borderWidth: 1,
+					backgroundColor: colors
+				}
+			]
+		}
+	};
+	var container = document.getElementById('chartContainer');
+	new Chart(container, options_chart);
+		//var data = $('#content');
+		//$("#contentContainer").pivotUI(
+		//	data, {
+		//		rows: ["Watches No", "Watches Name", "Unit Sales", "Sales Cost"],
+		//		vals: ["Sales Cost"],
+		//		aggregatorName: "Sum",
+		//		rendererName: "Table Barchart",
+		//		renderers: $.extend(
+		//			$.pivotUtilities.renderers,
+		//			$.pivotUtilities.plotly_renderers
+		//		)
+		//	});
+</script>
+

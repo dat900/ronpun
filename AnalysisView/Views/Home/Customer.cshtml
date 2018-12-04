@@ -1,0 +1,82 @@
+﻿<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+
+@{
+	ViewBag.Title = "Customer";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using AnalysisView.Models;
+<h2>Customers</h2>
+<div id="contentContainer" class=""></div>
+<canvas id="chartContainer"></canvas>
+@*<table id="content" style="display:none">
+		<thead>
+			<tr>
+
+				<th>Customer Name</th>
+				<th>Customer Address</th>
+				<th>Unit sales</th>
+				<th>Sales Cost</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (khach_hang_cube khs in Model)
+			{
+				<tr>
+					<td>@khs.tenkh</td>
+					<td>@khs.diachi</td>
+					<td>@khs._so_luong</td>
+					<td>@khs._so_tien</td>
+				</tr>
+			}
+		</tbody>
+	</table>*@
+<script>
+	$('.active').removeClass;
+	$('#customer').addClass('active');
+	var label_data = @Html.Raw(Json.Encode(ViewBag.tenkh));
+	var data_so_tien = @Html.Raw(Json.Encode(ViewBag.so_tien));
+	var colors = [
+		'rgb(252, 180, 92)',
+		'rgb(13, 27, 63)',
+		'rgb(71, 191, 180)',
+		'rgb(51, 143, 82)',
+		'rgb(247, 70, 74)',
+		'rgb(150, 181, 180)',
+		'rgb(77, 83, 96)',
+		'rgb(180, 142, 173)',
+		'rgb(235, 203, 138)',
+		'rgb(134, 175, 18)',
+		'rgb(94, 65, 149)',
+		'rgb(171, 121, 103)',
+	];
+		var options_chart = {
+		type: 'bar',
+		data: {
+			labels: label_data,
+			datasets: [
+				{
+					label: 'Sales Cost',
+					data: data_so_tien,
+					borderWidth: 1,
+					backgroundColor: colors
+				}
+			]
+		}
+	};
+	var container = document.getElementById('chartContainer');
+	new Chart(container, options_chart);
+	//var data = $('#content');
+	//$("#contentContainer").pivotUI(
+	//	data, {
+	//		rows: ["Customer Name", "Unit sales", "Sales Cost"],
+	//		//cols: ["Customer Address"],
+	//		vals: ["Sales Cost"],
+	//		aggregatorName: "Sum",
+	//		rendererName: "Table Barchart",
+	//		renderers: $.extend(
+	//			$.pivotUtilities.renderers,
+	//			$.pivotUtilities.plotly_renderers
+	//		)
+	//	});
+</script>
+

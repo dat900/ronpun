@@ -1,0 +1,103 @@
+﻿<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+
+@{
+	ViewBag.Title = "Top Brand Seller";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Top Brand Seller</h2>
+	<canvas id="chartContainer" ></canvas>
+	<h2 id="nameSlaveChart"></h2>
+	<canvas id="slaveContainer"></canvas>
+
+<script>
+	$('.active').removeClass;
+	$('#top_brand').addClass('active');
+	var data_label = @Html.Raw(Json.Encode(ViewBag.thuong_hieu));
+	var data_so_tien = @Html.Raw(Json.Encode(ViewBag.so_tien));
+	var colors = [
+		'rgb(71, 191, 180)',
+		'rgb(252, 180, 92)',
+		'rgb(247, 70, 74)',
+		'rgb(13, 27, 63)',
+		'rgb(51, 143, 82)',
+		'rgb(77, 83, 96)',
+		'rgb(180, 142, 173)',
+		'rgb(150, 181, 180)',
+		'rgb(235, 203, 138)',
+		'rgb(94, 65, 149)',
+		'rgb(171, 121, 103)',
+		'rgb(134, 175, 18)'
+	];
+	var options_chart = {
+		type: 'doughnut',
+		data: {
+			labels: data_label,
+			datasets: [
+				{
+					label: 'Sales Cost',
+					data: data_so_tien,
+					borderWidth: 1,
+					backgroundColor: colors
+				}
+			],
+
+			}
+			};
+
+	var container = document.getElementById('chartContainer');
+	var master_chart = new Chart(container, options_chart);
+	//console.log(master_chart.data.labels[0]);
+	var slave_chart;
+	$('#nameSlaveChart').text(master_chart.data.labels[0]);
+	$.ajax({
+			url: '@Url.Action("Brand_Detail")',
+			method: 'POST',
+			data: { mathuonghieu: master_chart.data.labels[0] },
+			async: true,
+			success: function (data) {
+				//console.log(data.tendh);
+				//console.log(data.so_tien);
+					slave_chart = new Chart(slave_container,
+						{
+							type: 'bar',
+							data: {
+								labels: data.tendh,
+								datasets: [
+									{
+										label: "Sales Cost",
+										data: data.so_tien,
+										borderWidth: 1,
+										backgroundColor: colors
+									}
+								]
+							}
+						});
+				}
+			
+		});
+	var slave_container = document.getElementById('slaveContainer');
+	$('#chartContainer').click(function (evt) {
+		var data_evt = master_chart.getElementAtEvent(evt)[0];
+		var label = master_chart.data.labels[data_evt._index];
+		$('#nameSlaveChart').text(label);
+		
+		//console.log(label);
+		$.ajax({
+			url: '@Url.Action("Brand_Detail")',
+			method: 'POST',
+			data: { mathuonghieu: label },
+			async: true,
+			success: function (data) {
+				console.log(data.tendh);
+				console.log(data.so_tien);
+				slave_chart.data.labels = data.tendh;
+				slave_chart.data.datasets[0].data = data.so_tien;
+				slave_chart.update();
+				}
+			
+		});
+	})
+</script>
+
+

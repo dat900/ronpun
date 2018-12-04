@@ -1,0 +1,60 @@
+﻿<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.min.css" />
+
+@{
+	ViewBag.Title = "Watches_Report";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using AnalysisView.Models;
+@model List<dong_ho_report>
+<h2>Watches Report</h2>
+<div id="rp_watches_table" class=""></div>
+<table id="report_watches_table">
+	<thead>
+		<tr>
+
+			<th>Watches Name</th>
+			<th>Brand</th>
+			<th>Unit Sales</th>
+			<th>Sales Cost</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (dong_ho_report khs in Model)
+		{
+			<tr>
+				<td>@khs.tendh</td>
+				<td>@khs.thuonghieu</td>
+				<td>@khs.soluong</td>
+				<td>@khs.sotien</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<script>
+	$('.active').removeClass();
+	$('#report_watches').addClass('active');
+	var table = $('#report_watches_table').dataTable();
+	var tabletools = new $.fn.dataTable.TableTools(table, {
+		'sSwfPath': '//cdn.datatables.net/tabletools/2.2.4/swf/copy_csv_xls_pdf.swf',
+		'aButtons': ['copy', {
+			'sExtends': 'print',
+			'bShowAll': false
+		},
+			'csv', {
+				'sExtends': 'xls',
+				'sFileName': 'Report_Watches.xls',
+				'aButtons': 'Save to Exel'
+			},
+			{
+				'sExtends': 'pdf',
+				'sFileName': 'Report_Watches.pdf'
+			}]
+	});
+	$(tabletools.fnContainer()).insertBefore('#rp_watches_table');
+
+</script>
+

@@ -1,0 +1,69 @@
+﻿<link href="~/fonts/css/now-ui-dashboard.css?v=1.0.1" rel="stylesheet" />
+<link href="~/Scripts/now-ui-dashboard.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-basic-latest.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.13.0/pivot.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.20.0/pivot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.22.0/plotly_renderers.min.js"></script>
+@{
+	ViewBag.Title = "Sales";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using AnalysisView.Models;
+@model List<Sales_fact_Cube>
+
+<h2>Sales Detail</h2>
+<div id="contentContainer" class=""></div>
+
+<table id="content" style="display:none">
+	<thead>
+		<tr>
+			<th>Tên ĐH</th>
+			<th>Loại</th>
+			<th>Thương hiệu</th>
+			<th>Ngày</th>
+			<th>Tuần</th>
+			<th>Tháng</th>
+			<th>Quý</th>
+			<th>Năm</th>
+			<th>Số lượng</th>
+			<th>Số tiền</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Sales_fact_Cube sf_hc in Model)
+		{
+			<tr>
+
+				<td>@sf_hc.ten_dh</td>
+				<td>@sf_hc.loai</td>
+				<td>@sf_hc.thuonghieu</td>
+				<td>@sf_hc._date</td>
+				<td>@sf_hc._week</td>
+				<td>@sf_hc._month</td>
+				<td>@sf_hc._quarter</td>
+				<td>@sf_hc._year</td>
+				<td>@sf_hc.soluong</td>
+				<td>@sf_hc.sotien</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<script>
+	$('.active').removeClass;
+	$('#sales_detail').addClass('active');
+	var data = $('#content');
+	$("#contentContainer").pivotUI(
+		data, {
+			rows: ["Tên ĐH", "Thương hiệu"],
+			cols: ["Năm"],
+			vals: ["Số tiền"],
+			aggregatorName: "Sum",
+			rendererName: "Table",
+			renderers: $.extend(
+				$.pivotUtilities.renderers,
+				$.pivotUtilities.plotly_renderers
+			)
+		});
+</script>
+
